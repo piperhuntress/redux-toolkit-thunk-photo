@@ -13,7 +13,7 @@ const initialState = {
 };
 
 //Register user
-export const register = createAsyncThunk("register", async);
+//export const register = createAsyncThunk("register", async);
 
 export const authSlice = createSlice({
   name: "auth",
