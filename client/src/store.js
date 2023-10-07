@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import galleryReducer from "./features/gallerySlice";
-import authReducer from './features/authSlice'
-
+import authReducer from "./features/authSlice";
+import userReducer from "./features/userSlice";
 
 const store = configureStore({
   reducer: {
     gallery: galleryReducer,
-    auth:authReducer,
+    auth: authReducer,
+    user: userReducer,
   },
 });
 

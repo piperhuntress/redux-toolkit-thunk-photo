@@ -1,24 +1,40 @@
 import { useState, useEffect } from "react";
 import { FaSignInAlt } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../features/userSlice.js";
 
 const Login = () => {
-  const [formData, setformData] = useState({
-    email: "",
-    password: "",
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
 
-  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { email,password}=formData
+  const user = useSelector((state) => state.user.user);
+  const isSuccess = useSelector((state) => state.user.isSuccess);
+  const isError = useSelector((state) => state.user.isError);
+  // const success=useSelector(state)=>
 
-  const onChange=(e)=>{
-    setformData((prevState)=>({ 
-       ...prevState,
-       [e.target.name] :e.target.value
-    }))
-  }
-  const onSubmit=()=>{
+  useEffect(() => {
+    if (isError) {
+      navigate("/login");
+    }
+    if (isSuccess) {
+      console.log("succes");
+      navigate("/gallery");
+    }
+    // dispatch(reset());
+  }, [user, isError, isSuccess, navigate, dispatch]);
 
-  }
+  const handlogin = (response) => {
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
+    console.log(response);
+  };
   return (
     <div>
       <section className="heading">
@@ -28,29 +44,34 @@ const Login = () => {
         </h1>
         <p>Login</p>
         <section className="form">
-          <form onClick={onSubmit}>
-             <div className="form-group">
+          <div className="form-group">
             <input
               type="text"
               className="form-control"
               id="email"
               value={email}
-              placeholder="Enter your email..." onChange={onChange}
+              placeholder="Enter your email..."
+              onChange={(e) => {
+                setemail(e.target.value);
+              }}
             />
-             </div>             
-             <div className="form-group">
+          </div>
+          <div className="form-group">
             <input
               type="text"
               className="form-control"
               id="password"
               value={password}
-              placeholder="Enter your password..." onChange={onChange}
+              placeholder="Enter your password..."
+              onChange={(e) => {
+                setpassword(e.target.value);
+              }}
             />
-             </div>  
+          </div>
 
-             <button type="submit" className="btn btn-button">Submit</button>                     
-          </form>
-         
+          <button type="submit" className="btn btn-button" onClick={handlogin}>
+            Submit
+          </button>
         </section>
       </section>
     </div>
