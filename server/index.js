@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 import UserModelModel from "./Models/Users.js";
 import cors from "cors";
 import UserModel from "./Models/Users.js";
+import jwt from 'jsonwebtoken'
+import bcrypt  from 'bcrypt'
+
+
 
 const app = express();
 //middlewares
@@ -24,7 +28,8 @@ app.post("/register", async (req, res) => {
 
     const name = req.body.name;
     const email = req.body.email;
-    const password = req.body.password;
+    const password=eq.body.password;
+    const hashedpassword = await bcrypt.hash(password,10);
 
     const user = new UserModel({
       name: name,
@@ -53,17 +58,17 @@ app.post("/login", async (req, res) => {
         if (!user) {
           return res.status(401).json({ user, error: "Authentication failed" });
         }
-        const passwordMatch = await (password, user.password);
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
           return res.status(401).json({ error: "Authentication failed" });
         }
 
-        /*         const token = jwt.sign({ userId: user._id }, "your-secret-key", {
+        const token = jwt.sign({ userId: user._id }, "your-secret-key", {
           expiresIn: "1h",
         });
 
-        res.status(200).json({ token }); */
+        res.status(200).json({ token }); 
         res.send({ user: user, message: "Success." });
       })
       .catch(function (err) {

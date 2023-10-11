@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register } from "../features/userSlice";
 
+
 const Register = () => {
   const [name, setname] = useState();
   const [email, setemail] = useState();
@@ -13,6 +14,11 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user.user);
+  const isSuccess = useSelector((state) => state.user.isSuccess);
+  const isError = useSelector((state) => state.user.isError);
+
+;
   const handleSubmit = () => {
     const userData = {
       name,
@@ -20,7 +26,11 @@ const Register = () => {
       password,
     };
     dispatch(register(userData));
+    navigate("/login")
+    
   };
+
+
   return (
     <div>
       <section className="heading">

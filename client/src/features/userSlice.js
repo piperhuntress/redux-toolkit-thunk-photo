@@ -1,8 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 export const register = createAsyncThunk("users/register", async (userData) => {
   console.log(userData);
+
+  
+
+
   const response = await axios
     .post("http://localhost:3001/register", {
       name: userData.name,
@@ -64,7 +71,8 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
+        state.isSuccess = false;
+        
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

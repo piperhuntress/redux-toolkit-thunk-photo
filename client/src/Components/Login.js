@@ -14,7 +14,6 @@ const Login = () => {
   const user = useSelector((state) => state.user.user);
   const isSuccess = useSelector((state) => state.user.isSuccess);
   const isError = useSelector((state) => state.user.isError);
-  // const success=useSelector(state)=>
 
   useEffect(() => {
     if (isError) {
@@ -66,7 +65,7 @@ const Login = () => {
               onChange={(e) => {
                 setpassword(e.target.value);
               }}
-            />
+               />
           </div>
 
           <button type="submit" className="btn btn-button" onClick={handlogin}>

@@ -42,8 +42,8 @@ const Header = () => {
         ) : (
           <>
             <li>
-              <button>
-                <FaSignOutAlt onClick={handleLogout} />
+              <button onClick={handleLogout}>
+                <FaSignOutAlt  />
                 Logout
               </button>
             </li>
