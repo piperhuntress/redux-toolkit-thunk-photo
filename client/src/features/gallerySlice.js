@@ -2,10 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getPhotos = createAsyncThunk("photos/getPhotos", async () => {
-  /*   const response = await fetch("https://picsum.photos/v2/list?page=2&limit=9");
-  const formattedReresponse = response.json();
-  return formattedReresponse; */
-
   try {
     const response = await axios.get(
       "https://picsum.photos/v2/list?page=2&limit=9"

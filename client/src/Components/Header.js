@@ -3,6 +3,8 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { logout } from "../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { login, reset } from "../features/userSlice.js";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,11 +14,26 @@ const Header = () => {
   console.log(user);
   const isSuccess = useSelector((state) => state.user.isSuccess);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      // Clear the JWT token from local storage
+      //localStorage.removeItem("jwtToken");
 
-    // Additional logout logic (e.g., clearing local storage, redirecting, etc.)
+      // Dispatch the logout action
+      dispatch(logout());
+
+      // Clear user data in the Redux store
+      dispatch(reset());
+
+      // Navigate to the login page
+      navigate("/login");
+
+      // Add any additional logic you need for logout (e.g., invalidating sessions, etc.)
+
+      // Respond with a success message or redirect to the login page
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="header">
@@ -41,9 +58,11 @@ const Header = () => {
           </>
         ) : (
           <>
+            <li>{user.email}</li>
+            <Link to="/blog">Blog Posts</Link>
             <li>
               <button onClick={handleLogout}>
-                <FaSignOutAlt  />
+                <FaSignOutAlt />
                 Logout
               </button>
             </li>

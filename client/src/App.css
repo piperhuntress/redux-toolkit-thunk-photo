@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+.listPosts{
+  padding: 10px;
+  border-style: solid;
+  border-width: thin;
+  width: 400px;
+  margin: auto;
+}
+.error{
+  color: red;
+  font-size: small;
+}

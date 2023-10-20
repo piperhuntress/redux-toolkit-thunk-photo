@@ -3,6 +3,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../features/userSlice.js";
+import * as yup from "yup";
 
 const Login = () => {
   const [email, setemail] = useState();
@@ -15,24 +16,27 @@ const Login = () => {
   const isSuccess = useSelector((state) => state.user.isSuccess);
   const isError = useSelector((state) => state.user.isError);
 
+  const LoginValidationSchema = yup.object().shape({});
+
   useEffect(() => {
     if (isError) {
       navigate("/login");
     }
     if (isSuccess) {
-      console.log("succes");
-      navigate("/gallery");
+      console.log("success");
+      navigate("/blog");
+    } else {
+      navigate("/login");
     }
     // dispatch(reset());
   }, [user, isError, isSuccess, navigate, dispatch]);
 
-  const handlogin = (response) => {
+  const handlogin = () => {
     const userData = {
       email,
       password,
     };
     dispatch(login(userData));
-    console.log(response);
   };
   return (
     <div>
@@ -65,7 +69,7 @@ const Login = () => {
               onChange={(e) => {
                 setpassword(e.target.value);
               }}
-               />
+            />
           </div>
 
           <button type="submit" className="btn btn-button" onClick={handlogin}>
